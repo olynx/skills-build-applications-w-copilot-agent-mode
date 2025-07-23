@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-_b29_k*-3@o4l=zznhzdrqg!=_t@(tu88iogfgo$*&k4t=_egr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'curly-space-disco-wxvjvvpxw94hgp9j-8000.app.github.dev',
+    # Add more domains as needed
+]
 
 
 # Application definition
