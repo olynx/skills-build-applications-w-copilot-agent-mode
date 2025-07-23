@@ -11,7 +11,20 @@ function Activities() {
   useEffect(() => {
     fetch(API_URL)
       .then(res => res.json())
-      .then(data => setActivities(data))
+      .then(data => {
+        // Handle paginated or object response
+        if (Array.isArray(data)) {
+          setActivities(data);
+        } else if (Array.isArray(data.results)) {
+          setActivities(data.results);
+        } else if (typeof data === 'object') {
+          // Try to find the first array in the object
+          const arr = Object.values(data).find(v => Array.isArray(v));
+          setActivities(arr || []);
+        } else {
+          setActivities([]);
+        }
+      })
       .catch(err => console.error('Error fetching activities:', err));
   }, []);
 
@@ -23,16 +36,16 @@ function Activities() {
           <thead className="table-primary">
             <tr>
               <th>#</th>
-              <th>Name</th>
-              <th>Description</th>
+              <th>Activity Type</th>
+              <th>Duration</th>
             </tr>
           </thead>
           <tbody>
             {Array.isArray(activities) && activities.map((activity, idx) => (
               <tr key={activity.id}>
                 <td>{idx + 1}</td>
-                <td>{activity.name}</td>
-                <td>{activity.description || ''}</td>
+                <td>{activity.activity_type || ''}</td>
+                <td>{activity.duration || ''}</td>
               </tr>
             ))}
           </tbody>

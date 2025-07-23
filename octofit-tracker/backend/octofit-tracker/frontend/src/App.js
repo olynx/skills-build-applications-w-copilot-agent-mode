@@ -35,7 +35,9 @@ function App() {
       </Navbar>
       <Container>
         <Routes>
-// ...existing code...
+          <Route path="/" element={<h1 className="display-4 text-center mb-4">Welcome to Octofit<br /><small className="text-muted">Mergington High School Fitness Tracker</small></h1>} />
+          <Route path="/activities" element={<Activities />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/teams" element={<Teams />} />
           <Route path="/users" element={<Users />} />
           <Route path="/workouts" element={<Workouts />} />
