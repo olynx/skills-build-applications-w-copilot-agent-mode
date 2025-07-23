@@ -12,16 +12,18 @@ def api_root(request, format=None):
         return Response({"message": "POST request received"}, status=status.HTTP_201_CREATED)
     # Detect codespace environment from HTTP_HOST or environment variable
     host = request.get_host() if hasattr(request, 'get_host') else 'localhost:8000'
-    if 'app.github.dev' in host:
-        base_url = f'https://{host}/'
+    if 'curly-space-disco-wxvjvvpxw94hgp9j-8000.app.github.dev' in host:
+        base_url = f'https://curly-space-disco-wxvjvvpxw94hgp9j-8000.app.github.dev/'
+        api_suffix = '?codespace=1'
     else:
         base_url = 'http://127.0.0.1:8000/'
+        api_suffix = ''
     return Response({
-        'users': base_url + 'api/users/?format=api',
-        'teams': base_url + 'api/teams/?format=api',
-        'activities': base_url + 'api/activities/?format=api',
-        'leaderboard': base_url + 'api/leaderboard/?format=api',
-        'workouts': base_url + 'api/workouts/?format=api'
+        'users': base_url + 'api/users/' + api_suffix,
+        'teams': base_url + 'api/teams/' + api_suffix,
+        'activities': base_url + 'api/activities/' + api_suffix,
+        'leaderboard': base_url + 'api/leaderboard/' + api_suffix,
+        'workouts': base_url + 'api/workouts/' + api_suffix
     })
 
 class UserViewSet(viewsets.ModelViewSet):
