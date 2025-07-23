@@ -1,3 +1,5 @@
+
+import os
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -8,7 +10,12 @@ from .models import User, Team, Activity, Leaderboard, Workout
 def api_root(request, format=None):
     if request.method == 'POST':
         return Response({"message": "POST request received"}, status=status.HTTP_201_CREATED)
-    base_url = 'http://localhost:8000/'
+    # Detect codespace environment from HTTP_HOST or environment variable
+    host = request.get_host() if hasattr(request, 'get_host') else 'localhost:8000'
+    if 'app.github.dev' in host:
+        base_url = f'https://{host}/'
+    else:
+        base_url = 'http://127.0.0.1:8000/'
     return Response({
         'users': base_url + 'api/users/?format=api',
         'teams': base_url + 'api/teams/?format=api',
